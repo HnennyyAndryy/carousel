@@ -1,0 +1,224 @@
+
+html, body{
+	background: #eee;
+	width: 100%;
+}
+
+.wrapper{
+  width:90%;
+  position:relative;
+  margin:5% auto 0;
+}
+
+/**
+ * Padding is set relative to the width
+ * of the element, so here padding-top:60% is
+ * a percentage of the width. This allows us 
+ * to set the height as a ratio of the width
+ *
+ */
+.carousel{
+	width: 100%;
+	position: relative;
+	padding-top: 60%;
+	overflow: hidden;
+}
+
+.inner{
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top:0;
+	left: 0;
+}
+
+/**
+ * ==========================
+ * Animation styles
+ * 
+ * Notes:
+ * 1. We use z-index to position active slides in-front 
+ * of non-active slides
+ * 2. We set right:0 and left:0 on .slide to provide us with
+ * a default positioning on both sides of the slide. This allows 
+ * us to trigger JS and CSS3 animations easily
+ *
+ */
+.slide{
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top:0;
+	right:0;
+	left:0;
+	z-index: 1;
+	opacity: 0;
+}
+
+.slide.active,
+.slide.left,
+.slide.right{
+	z-index: 2;
+	opacity: 1;
+}
+
+/**
+ * ==========================
+ * JS animation styles
+ * 
+ * We use jQuery.animate to control the sliding animations
+ * when CSS3 animations are not available. In order for
+ * the next slide to slide in from the right, we need
+ * to change the left:0 property of the slide to left:auto
+ *
+ */
+
+.js-reset-left{left:auto}
+
+/**
+ * ==========================
+ * CSS animation styles
+ * 
+ * .slide.left and .slide.right set-up
+ * the to-be-animated slide so that it can slide
+ * into view. For example, a slide that is about 
+ * to slide in from the right will:
+ * 1. Be positioned to the right of the viewport (right:-100%)
+ * 2. Slide in when the style is superseded with a more specific style (right:0%)
+ *
+ */
+.slide.left{
+	left:-100%;
+	right:0;
+}
+
+.slide.right{
+	right:-100%;
+	left: auto;
+}
+
+.transition .slide.left{left:0%}
+.transition .slide.right{right:0%}
+
+/**
+ * The following classes slide the previously active
+ * slide out of view before positioning behind the 
+ * currently active slide
+ *
+ */
+.transition .slide.shift-right{right: 100%;left:auto}
+.transition .slide.shift-left{left: 100%;right:auto}
+
+/**
+ * This sets the CSS properties that will animate. We set the
+ * transition-duration property dynamically via JS.
+ * We use the browser's default transition-timing-function
+ * for simplicity's sake
+ * 
+ */
+.transition .slide{
+	-webkit-transition-property: right, left, margin;
+    -moz-transition-property: right, left, margin;
+    -o-transition-property: right, left, margin;
+	transition-property: right, left, margin;
+}
+
+/**
+ * ==========================
+ * Indicators
+ *
+ */
+.indicators{
+  width:100%;
+  position: absolute;
+  bottom:0;
+  z-index: 4;
+  padding:0;
+  text-align: center;
+}
+
+.indicators li{
+	width: 13px;
+	height: 13px;
+	display: inline-block;
+	margin: 5px;
+	background: #fff;
+	list-style-type: none;
+	border-radius: 50%;
+	cursor:pointer;
+  	transition: background 0.3s ease-out;
+}
+
+.indicators li.active{background:#93278f}
+
+.indicators li:hover{
+	background-color:#2b2b2b;
+	box-shadow: 0 0 2px 2px #2b2b2b;
+}
+
+/**
+ * ==========================
+ * Arrows 
+ *
+ */
+.arrow{
+  width: 20px;
+  height: 20px;
+  position:absolute;
+  top:50%;
+  z-index:5;
+  border-top:3px solid #fff;
+  border-right:3px solid #fff;
+  cursor:pointer;
+  transition:border-color 0.3s ease-out;
+}
+
+.arrow:hover{border-color:#93278f}
+
+.arrow-left{
+  left:20px;
+  transform:rotate(225deg);
+}
+
+.arrow-right{
+  right:20px;
+  transform:rotate(45deg);
+}
+
+/**
+ * ==========================
+ * For demo purposes only
+ * 
+ * Please note that the styles below are used
+ * for the purposes of this demo only. There is no need
+ * to use these in any of your own projects
+ *
+ */
+.slide{
+	text-align:center;
+  	padding-top:25%;
+  	background-size:cover;
+}
+
+h1{
+	width:100px;
+  height:100px;
+  background-color:rgba(146, 45, 141,0.7);
+	margin:auto;
+  line-height:100px;
+	color:#fff;
+	font-size:2.4em;
+  border-radius:50%;
+}
+
+.slide:nth-child(1){
+	background-image:url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/163697/slide-1.jpg);
+ }
+
+.slide:nth-child(2){
+	background-image:url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/163697/slide-2.jpg);
+}
+
+.slide:nth-child(3){
+	background-image:url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/163697/slide-3.jpg);
+ }
