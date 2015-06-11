@@ -383,9 +383,9 @@
 		//Animation: Next slide
 		$nextSlide.animate(animation,this.settings.speed,'swing',function(){
 			//Get rid of any JS animation residue
-			_.$currSlide.removeClass('active js-reset-left').attr('style','');
+			_.$currSlide.removeClass('active js-reset-left').css({left:'',right:''});
 			//Cache the next slide after classes and inline styles have been removed
-			_.$currSlide = $nextSlide.removeClass(direction).attr('style','');
+			_.$currSlide = $nextSlide.removeClass(direction).css({left:'',right:''});
 			_._updateIndicators();
 			_.startTimer();
 		});
