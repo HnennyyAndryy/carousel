@@ -88,6 +88,9 @@
     this.csstransitionsTest();
     // Add a class so we can style our carousel
     this.$el.addClass('zippy-carousel');
+    // Set image for each slide which address defined by 
+    // data-image attribute of .slide
+    this.setBackgrounds();
     // Build out any DOM elements needed for the plugin to run
     // Eg, we'll create an indicator dot for every slide in the carousel
     this.build();
@@ -150,6 +153,20 @@
 		});
 	}
 	
+	/**
+	 * Sets background for each slide based on data-image attr
+	 * @params void
+	 * @returns void
+	 *
+	 */ 
+	Zippy.prototype.setBackgrounds = function(){
+		this.$el.find('.slide').each(function(){
+			$(this).css("background-image", 'url('+$(this).data('image')+')');
+		});
+	}
+
+
+
 	/**
 	 * Creates a list of indicators based on the amount of slides
 	 * @params void

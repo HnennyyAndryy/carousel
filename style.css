@@ -211,6 +211,15 @@ h1{
   border-radius:50%;
 }
 
+
+/* 
+Image background for each slide is defined by data-image attribute within each .slide instead of selecting 
+images in this CSS file. This simplifies the understanding of carousel work for user. User should not 
+bother to go into CSS. 
+
+'background-image' properties are set by setBackground() function.
+*/
+/*
 .slide:nth-child(1){
 	background-image:url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/163697/slide-1.jpg);
  }
@@ -221,4 +230,4 @@ h1{
 
 .slide:nth-child(3){
 	background-image:url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/163697/slide-3.jpg);
- }
+ }*/
