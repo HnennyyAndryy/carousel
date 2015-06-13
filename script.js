@@ -339,6 +339,8 @@
     //Init CSS transitions
 		setTimeout(function(){
 			this.$el.addClass('transition');
+			this.$el.find('.captions .caption').removeClass('active');
+			this.$el.find('.captions .caption').eq(this.currSlide).addClass('active');
 			this.addCSSDuration();
 			this.$currSlide.addClass('shift-'+direction);
 		}.bind(this),100);
@@ -430,5 +432,3 @@ var args = {
 
 $('.carousel').Zippy(args);
 
-
-$('.carousel').Zippy(args);
