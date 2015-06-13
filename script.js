@@ -199,7 +199,7 @@
    *
    */
 	Zippy.prototype.events = function(){
-		$('body')
+		$(this.$el)
 			.on('click',this.settings.arrowRight,{direction:'right'},this.changeSlide)
 			.on('click',this.settings.arrowLeft,{direction:'left'},this.changeSlide)
 			.on('click','.indicators li',this.changeSlide);
@@ -427,5 +427,8 @@ var args = {
 	speed : 1000, //The speed of the animation (milliseconds)
 	slideDuration : 4000 //The amount of time between animations (milliseconds)
 };
+
+$('.carousel').Zippy(args);
+
 
 $('.carousel').Zippy(args);
