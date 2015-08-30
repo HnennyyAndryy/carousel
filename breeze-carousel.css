@@ -1,18 +1,3 @@
-
-
-html, body{
-	background: #eee;
-	width: 100%;
-}
-
-.wrapper{
-  width:90%;
-  height: 400px;
-  background-color: red;
-  position:relative;
-  margin:5% auto 0;
-}
-
 /**
  * Padding is set relative to the width
  * of the element, so here padding-top:60% is
@@ -229,27 +214,3 @@ html, body{
 	display: inline-block;
 	opacity: 1;
 }
-
-
-
-
-
-/* 
-Image background for each slide is defined by data-image attribute within each .slide instead of selecting 
-images in this CSS file. This simplifies the understanding of carousel work for user. User should not 
-bother to go into CSS. 
-
-'background-image' properties are set by setBackground() function.
-*/
-/*
-.slide:nth-child(1){
-	background-image:url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/163697/slide-1.jpg);
- }
-.slide:nth-child(2){
-	background-image:url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/163697/slide-2.jpg);
-}
-
-.slide:nth-child(3){
-	background-image:url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/163697/slide-3.jpg);
- }
- */

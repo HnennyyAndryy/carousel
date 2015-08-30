@@ -1,0 +1,12 @@
+html, body{
+	background: #eee;
+	width: 100%;
+}
+
+.wrapper{
+  width:90%;
+  height: 400px;
+  background-color: red;
+  position:relative;
+  margin:5% auto 0;
+}
