@@ -1,4 +1,4 @@
-@import url('http://fonts.googleapis.com/css?family=Open+Sans+Condensed');
+
 
 html, body{
 	background: #eee;
@@ -208,21 +208,24 @@ html, body{
 	margin: auto auto 50px;
 }
 .captions .caption {
-	width: 150px;
 	position: relative;
-	background-color: rgba(146,45,141,0.5);
+	background-color: rgba(60,150,80,0.5);
 	color: #fff;
 	border-radius: 15%;
 	font-size: 2em;
-	font-family: 'Open Sans Condensed';
 	z-index: 6;
 	margin: auto;
+	width: 150px;
 	display: none;
+	opacity: 0;
 }
 
-.captions .caption.active {
+.captions .caption:first-of-type {
 	display: inline-block;
+	opacity: 1;
 }
+
+
 
 
 

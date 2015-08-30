@@ -339,8 +339,51 @@
     //Init CSS transitions
 		setTimeout(function(){
 			this.$el.addClass('transition');
-			this.$el.find('.captions .caption').removeClass('active');
-			this.$el.find('.captions .caption').eq(this.currSlide).addClass('active');
+			// this.$el.find('.captions .caption').removeClass('active');
+			// this.$el.find('.captions .caption').eq(this.currSlide).addClass('active');
+			
+
+			 var self = this;
+			 var prev = self.$el.find('.captions .caption.active');
+			 var next = self.$el.find('.captions .caption').eq(self.currSlide);
+
+			 prev.animate(
+			 	{ opacity : 0.1},
+			 	{
+			 	 	duration : this.settings.speed/2,
+			 	 	queue : 'fadeOut',
+			 	 	complete : function(){
+			 	 		prev.removeClass('active');
+			 	 		next.addClass('active');
+			 	 		prev.css('display', 'none');
+			 	 		next.css('display', 'inline-block');
+			 	 	}
+			 	}
+			 );
+		
+			 next.animate(
+			 	{ opacity : 0.9},
+			 	{
+			 	 	duration : this.settings.speed/2,
+			 	 	queue : 'fadeIn',
+			 	}
+			 );
+
+			 setTimeout(function(){prev.dequeue('fadeOut')}, 10);
+			 setTimeout(function(){next.dequeue('fadeIn')}, 10 + self.settings.speed/2);
+
+
+
+/*
+			 this.$el.find('.captions .caption.active').fadeOut(this.settings.speed/2, 
+			 	function(){
+					$(this).css('display', 'none');
+					$(this).removeClass('active');
+					self.$el.find('.captions .caption').eq(self.currSlide).addClass('active')
+					.css('display', 'inline-block').fadeIn(self.settings.speed/2);
+			 	}
+			 );
+*/
 			this.addCSSDuration();
 			this.$currSlide.addClass('shift-'+direction);
 		}.bind(this),100);
