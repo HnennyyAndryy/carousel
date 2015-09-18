@@ -160,9 +160,11 @@
 	 *
 	 */ 
 	Zippy.prototype.setBackgrounds = function(){
-		this.sizes = [];
-		self = this;
 
+		var self = this;
+		self.sizes = [];
+		// We need remember image dimensions for further use
+		// E.g. for adjusting aspect ratio
 		this.$el.find('.slide').each(function(ind){
 			var image = new Image();
 			image.src = $(this).data('image');
@@ -173,9 +175,8 @@
     		});
 			$(this).css("background-image", 'url('+$(this).data('image')+')');   
 		});
-
-
 	}
+
 
 	
 
@@ -217,14 +218,25 @@
 			.on('click','.indicators li',this.changeSlide);
 		
 		// Add handler to autoresize slider on slides change and window resize
-		self = this;
 		if(this.$el.hasClass('carousel-autoresize'))
-			$(window).on('resize', function(){
-					self.$el.css('height', (self.$el.width()*self.sizes[self.currSlide].height/
-				self.sizes[self.currSlide].width)+'px');
-			});
+			$(window).on('resize', {self : this}, this.resize); 
 	};
 	
+
+	/**
+   * Resizing carousel according to slide height.
+   * @params void
+   * @returns void
+   *
+   */
+	Zippy.prototype.resize = function(e){
+		var self = e.data.self;
+		// ensure that images are loaded and sizes are set
+		if(self.sizes[self.currSlide])
+			self.$el.css('height', (self.$el.width()*self.sizes[self.currSlide].height/
+				self.sizes[self.currSlide].width)+'px');
+	}
+
 	/**
 	 * TIMER
 	 * Resets the timer
