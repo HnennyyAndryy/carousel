@@ -18,7 +18,7 @@ Load jQuery(2.1.4+) and include Breeze Carousel plugin files
 You can add Breeze Carousel on your page like that : 
 
 ```html
-	<div class="carousel">
+	<div class="carousel carousel-autoresize">
     		<div class="captions">
           		<div class="caption active">First</div>
           		...
@@ -33,3 +33,4 @@ You can add Breeze Carousel on your page like that :
     		<div class="arrow arrow-right"></div>
   	</div>
 ```
+Note that you should add 'carousel-autoresize' class to make carousel changing its height automatically (keeping aspect ratio). Otherwise you should explicitly set height either on carousel's container or on carousel's style attribute.  
