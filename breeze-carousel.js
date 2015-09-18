@@ -34,6 +34,11 @@
      *
      */
     function _Zippy(element, settings){
+      // A little bit of metadata about the instantiated object
+      // This property will be incremented everytime a new Zippy carousel is created
+	  // It provides each carousel with a unique ID
+      this.instanceUid = instanceUid++;
+
       this.defaults = {
         slideDuration: '3000',
         speed: 500,
@@ -64,12 +69,7 @@
       this.changeSlide = $.proxy(this.changeSlide,this);
       
       // We'll call our initiator function to get things rolling!
-      this.init();
-      
-      // A little bit of metadata about the instantiated object
-      // This property will be incremented everytime a new Zippy carousel is created
-	  // It provides each carousel with a unique ID
-      this.instanceUid = instanceUid++;
+      this.init();      
     }
     
     return _Zippy;
@@ -218,8 +218,10 @@
 			.on('click','.indicators li',this.changeSlide);
 		
 		// Add handler to autoresize slider on slides change and window resize
-		if(this.$el.hasClass('carousel-autoresize'))
-			$(window).on('resize', {self : this}, this.resize); 
+		if(this.$el.hasClass('carousel-autoresize')){
+			$(window).on('resize', {self : this}, this.resize);
+			$(window).on('resize-'+this.instanceUid, {self : this}, this.resize); 
+		}
 	};
 	
 
@@ -231,6 +233,7 @@
    */
 	Zippy.prototype.resize = function(e){
 		var self = e.data.self;
+		console.log(self.$el.attr("id"));
 		// ensure that images are loaded and sizes are set
 		if(self.sizes[self.currSlide])
 			self.$el.css('height', (self.$el.width()*self.sizes[self.currSlide].height/
@@ -419,7 +422,7 @@
 			this.addCSSDuration();
 			this.$currSlide.addClass('shift-'+direction);
 			if(this.$el.hasClass('carousel-autoresize'))
-				$(window).triggerHandler('resize');
+				$(window).triggerHandler('resize-'+this.instanceUid);
 		}.bind(this),100);
 		
 		//CSS Animation Callback
