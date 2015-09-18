@@ -100,7 +100,7 @@
     this.activate();
     // Start the timer loop to control progression to the next slide
     this.initTimer();
-  };
+};
 	
 	/**
 	 * Appropriated out of Modernizr v2.8.3
@@ -160,12 +160,24 @@
 	 *
 	 */ 
 	Zippy.prototype.setBackgrounds = function(){
-		this.$el.find('.slide').each(function(){
-			$(this).css("background-image", 'url('+$(this).data('image')+')');
+		this.sizes = [];
+		self = this;
+
+		this.$el.find('.slide').each(function(ind){
+			var image = new Image();
+			image.src = $(this).data('image');
+			$(image).load(function () {
+				self.sizes.push({width : image.width, height : image.height});
+				if(ind == 0)
+					$(window).triggerHandler('resize');
+    		});
+			$(this).css("background-image", 'url('+$(this).data('image')+')');   
 		});
+
+
 	}
 
-
+	
 
 	/**
 	 * Creates a list of indicators based on the amount of slides
@@ -203,6 +215,14 @@
 			.on('click',this.settings.arrowRight,{direction:'right'},this.changeSlide)
 			.on('click',this.settings.arrowLeft,{direction:'left'},this.changeSlide)
 			.on('click','.indicators li',this.changeSlide);
+		
+		// Add handler to autoresize slider on slides change and window resize
+		self = this;
+		if(this.$el.hasClass('carousel-autoresize'))
+			$(window).on('resize', function(){
+					self.$el.css('height', (self.$el.width()*self.sizes[self.currSlide].height/
+				self.sizes[self.currSlide].width)+'px');
+			});
 	};
 	
 	/**
@@ -386,6 +406,8 @@
 */
 			this.addCSSDuration();
 			this.$currSlide.addClass('shift-'+direction);
+			if(this.$el.hasClass('carousel-autoresize'))
+				$(window).triggerHandler('resize');
 		}.bind(this),100);
 		
 		//CSS Animation Callback
@@ -453,9 +475,8 @@
 	 *
 	 */
 	$.fn.Zippy = function(options){
-    
+ 
     return this.each(function(index,el){
-      
       el.Zippy = new Zippy(el,options);
       
     });
@@ -473,5 +494,7 @@ var args = {
 	slideDuration : 4000 //The amount of time between animations (milliseconds)
 };
 
-$('.carousel').Zippy(args);
+$(function(){
+	$('.carousel').Zippy(args);
+});
 
