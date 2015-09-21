@@ -33,4 +33,6 @@ You can add Breeze Carousel on your page like that :
     		<div class="arrow arrow-right"></div>
   	</div>
 ```
-Note that you should add 'carousel-autoresize' class to make carousel changing its height automatically (keeping aspect ratio). Otherwise you should explicitly set height either on carousel's container or on carousel's style attribute.  
+Note that you should add **_'carousel-autoresize'_** class to make carousel changing its height automatically (keeping aspect ratio of every image). Otherwise you should explicitly set height either on carousel's container or on carousel's style attribute.  
+
+Also, you can use **_'carousel-autofix'_** class. It will set carousel's height corresponding to the most 'slender' image. Therefore, height won't be changing on every slide transition. 
