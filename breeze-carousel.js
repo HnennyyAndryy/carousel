@@ -50,6 +50,8 @@
       // have been merged with user supplied settings
       this.settings = $.extend({},this,this.defaults,settings);
       
+      this.maxImageHeight = 0;
+
       // This object holds values that will change as the plugin operates
       this.initials = {
         currSlide : 0,
@@ -170,8 +172,23 @@
 			image.src = $(this).data('image');
 			$(image).load(function () {
 				self.sizes.push({width : image.width, height : image.height});
-				if(ind == 0)
-					$(window).triggerHandler('resize');
+
+				// find a factor to make carousel width corresponding
+				// to the tallest image
+				if(ind == ($('.slide').length-1))
+					if(self.$el.hasClass('carousel-autofix'))
+					{
+						var factor = image.height/image.width;
+						for(var i = 1; i < self.sizes.length; i++){
+							var tmp = self.sizes[i].height/self.sizes[i].width;
+							if(tmp > factor)
+								factor = tmp;
+						}
+						self.factor = factor;
+						$(window).triggerHandler('resize');
+					}
+					
+
     		});
 			$(this).css("background-image", 'url('+$(this).data('image')+')');   
 		});
@@ -218,7 +235,8 @@
 			.on('click','.indicators li',this.changeSlide);
 		
 		// Add handler to autoresize slider on slides change and window resize
-		if(this.$el.hasClass('carousel-autoresize')){
+		if(this.$el.hasClass('carousel-autoresize') || 
+			this.$el.hasClass('carousel-autofix')){
 			$(window).on('resize', {self : this}, this.resize);
 			$(window).on('resize-'+this.instanceUid, {self : this}, this.resize); 
 		}
@@ -233,11 +251,17 @@
    */
 	Zippy.prototype.resize = function(e){
 		var self = e.data.self;
-		console.log(self.$el.attr("id"));
+		
+		if(self.$el.hasClass('carousel-autofix')){
+			self.$el.css('height', (self.$el.width()*self.factor)+'px');
+			return;
+		}
+
 		// ensure that images are loaded and sizes are set
-		if(self.sizes[self.currSlide])
+		if(self.sizes[self.currSlide]){
 			self.$el.css('height', (self.$el.width()*self.sizes[self.currSlide].height/
 				self.sizes[self.currSlide].width)+'px');
+		}
 	}
 
 	/**
